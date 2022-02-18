@@ -9,6 +9,7 @@ class Item < ApplicationRecord
   validates :price,           presence: true
 
   belongs_to :user
-  # has_one :order
-  # アソシエーションはテーブル作成時に記述する
+  # has_one :order ←テーブル作成時に記述する
+  extend ActiveHash::Associations::ActiveRecordExtensions
+  belongs_to :category_id, :condition_id, :shipping_fee_id, :prefecture_id, :schedule_id
 end
