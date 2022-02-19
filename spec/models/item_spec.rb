@@ -21,7 +21,7 @@ RSpec.describe Item, type: :model do
       it '商品名が41文字以上では登録できない' do
         @item.name = Faker::Lorem.characters(41)
         @item.valid?
-        expect(@item.errors.full_messages).to include "Name is too long (maximum is 40 characters)"
+        expect(@item.errors.full_messages).to include 'Name is too long (maximum is 40 characters)'
       end
       it '商品説明欄が空欄では登録できない' do
         @item.description = ''
@@ -29,9 +29,9 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include "Description can't be blank"
       end
       it '商品説明欄が1001文字以上では登録できない' do
-        @item.description = Faker::Lorem.characters(number: 1001, min_alpha: 1001 )
+        @item.description = Faker::Lorem.characters(number: 1001, min_alpha: 1001)
         @item.valid?
-        expect(@item.errors.full_messages).to include "Description is too long (maximum is 1000 characters)"
+        expect(@item.errors.full_messages).to include 'Description is too long (maximum is 1000 characters)'
       end
       it '商品カテゴリを選択していないと登録できない' do
         @item.category_id = 1
@@ -66,12 +66,12 @@ RSpec.describe Item, type: :model do
       it '価格が300未満では登録できない' do
         @item.price = 299
         @item.valid?
-        expect(@item.errors.full_messages).to include "Price is out of setting range"
+        expect(@item.errors.full_messages).to include 'Price is out of setting range'
       end
       it '価格が1千万以上では登録できない' do
-        @item.price = 10000000
+        @item.price = 10_000_000
         @item.valid?
-        expect(@item.errors.full_messages).to include "Price is out of setting range"
+        expect(@item.errors.full_messages).to include 'Price is out of setting range'
       end
       it '商品画像を選択していないと登録できない' do
         @item.image = nil
