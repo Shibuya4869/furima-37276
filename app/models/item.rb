@@ -12,4 +12,5 @@ class Item < ApplicationRecord
   # has_one :order ←テーブル作成時に記述する
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :category_id, :condition_id, :shipping_fee_id, :prefecture_id, :schedule_id
+  has_one_attached :image
 end
