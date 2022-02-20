@@ -13,6 +13,10 @@ class Item < ApplicationRecord
   belongs_to :user
   # has_one :order ←テーブル作成時に記述する
   extend ActiveHash::Associations::ActiveRecordExtensions
-  belongs_to :category, :condition, :shipping_fee, :prefecture, :schedule
+  belongs_to :category
+  belongs_to :condition
+  belongs_to :shipping_fee
+  belongs_to :prefecture
+  belongs_to :schedule
   has_one_attached :image
 end
