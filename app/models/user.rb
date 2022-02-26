@@ -20,6 +20,6 @@ class User < ApplicationRecord
     validates :last_name_kana
   end
 
-  has_many :tweets # , :orders
-  # アソシエーションはテーブル作成時に記述する
+  has_many :items
+  has_many :orders
 end
