@@ -5,6 +5,7 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.all.order('created_at DESC')
+    @order = Order.all
   end
 
   def new
@@ -21,6 +22,8 @@ class ItemsController < ApplicationController
   end
 
   def show
+    @order = Order.all
+    @search_result = order_search(@item, @order)
   end
 
   def edit
@@ -54,5 +57,13 @@ class ItemsController < ApplicationController
 
   def find_params
     @item = Item.find(params[:id])
+  end
+
+  def order_search(item, orders)
+    orders.each do |order|
+      if item.id == order.item_id
+        return 1
+      end
+    end
   end
 end
