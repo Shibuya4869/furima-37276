@@ -8,13 +8,10 @@
     </h2>
     <div class="item-img-content">
       <%= image_tag @item.image ,class:"item-box-img" %>
-      <% @order.each do |order| %>
-        <% if @item.id == order.item_id %>
-          <div class="sold-out">
-            <span>Sold Out!!</span>
-          </div>
-          <% break %>
-        <% end %>
+      <% if @search_result == 1 %>
+        <div class="sold-out">
+          <span>Sold Out!!</span>
+        </div>
       <% end %>
     </div>
     <div class="item-price-box">
