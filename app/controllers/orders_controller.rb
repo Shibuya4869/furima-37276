@@ -3,7 +3,7 @@ class OrdersController < ApplicationController
   before_action :authenticate_user!, only: [:index]
 
   def index
-    if @item.user_id == current_user.id
+    if (@item.user_id == current_user.id) or (order_search() == true)
       redirect_to root_path
     end
     @order_address = OrderAddress.new
@@ -42,4 +42,14 @@ class OrdersController < ApplicationController
         currency: 'jpy'
       )
   end
+
+  def order_search
+    orders = Order.all
+    orders.each do |order|
+      if @item.id == order.item_id
+        return true
+      end
+    end
+  end
+
 end
