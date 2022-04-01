@@ -3,9 +3,7 @@ class OrdersController < ApplicationController
   before_action :authenticate_user!, only: [:index]
 
   def index
-    if (@item.user_id == current_user.id) or (order_search() == true)
-      redirect_to root_path
-    end
+    redirect_to root_path if (@item.user_id == current_user.id) or (order_search == true)
     @order_address = OrderAddress.new
   end
 
@@ -30,26 +28,23 @@ class OrdersController < ApplicationController
     params.require(:order_address).permit(
       :order_id, :post_code, :prefecture_id, :city, :address, :building, :phone
     ).merge(
-      user_id: current_user.id, item_id: params[:item_id] , token: params[:token]
+      user_id: current_user.id, item_id: params[:item_id], token: params[:token]
     )
   end
 
   def pay_item
-    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
-      Payjp::Charge.create(
-        amount: Item.find(params[:item_id]).price,
-        card: order_params[:token],
-        currency: 'jpy'
-      )
+    Payjp.api_key = ENV['PAYJP_SECRET_KEY']
+    Payjp::Charge.create(
+      amount: Item.find(params[:item_id]).price,
+      card: order_params[:token],
+      currency: 'jpy'
+    )
   end
 
   def order_search
     orders = Order.all
     orders.each do |order|
-      if @item.id == order.item_id
-        return true
-      end
+      return true if @item.id == order.item_id
     end
   end
-
 end

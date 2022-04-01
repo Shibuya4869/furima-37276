@@ -62,16 +62,11 @@ class ItemsController < ApplicationController
   def order_search
     orders = Order.all
     orders.each do |order|
-      if @item.id == order.item_id
-        @search_result = 1
-      end
+      @search_result = 1 if @item.id == order.item_id
     end
   end
 
   def dont_edit
-    if @search_result == 1
-      redirect_to root_path
-    end
+    redirect_to root_path if @search_result == 1
   end
-
 end
