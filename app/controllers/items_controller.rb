@@ -1,10 +1,13 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :move_to_index,      only:   [:edit]
+  before_action :move_to_index,      only:   [:edit, :destroy]
   before_action :find_params,        only:   [:show, :edit, :update, :destroy]
+  before_action :order_search,       only:   [:show, :edit, :destroy]
+  before_action :dont_edit,          only:   [:edit, :destroy]
 
   def index
     @items = Item.all.order('created_at DESC')
+    @order = Order.all
   end
 
   def new
@@ -54,5 +57,16 @@ class ItemsController < ApplicationController
 
   def find_params
     @item = Item.find(params[:id])
+  end
+
+  def order_search
+    orders = Order.all
+    orders.each do |order|
+      @search_result = 1 if @item.id == order.item_id
+    end
+  end
+
+  def dont_edit
+    redirect_to root_path if @search_result == 1
   end
 end
